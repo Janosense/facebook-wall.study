@@ -2,17 +2,25 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Styles from './styles.m.css';
 import {Consumer} from './../HOC/withProfile';
+import PropTypes from 'prop-types';
 
 export default class Post extends Component {
+    static propTypes = {
+        comment: PropTypes.string.isRequired,
+        created: PropTypes.number.isRequired,
+    };
+
     render() {
+        const { comment, created } = this.props;
+
         return (
             <Consumer>
                 {(context) => (
                     <section className = { Styles.post }>
                         <img src = { context.avatar }/>
                         <a href = ''>{ `${context.currentUserFirstName} ${context.currentUserLastName}` }</a>
-                        <time>{ moment().format('MMMM DD YYYY') }</time>
-                        <p>Howdy!</p>
+                        <time>{ moment.unix(created).format('MMMM D h:mm:ss a') }</time>
+                        <p>{ comment }</p>
                     </section>
                 )}
             </Consumer>
