@@ -14,6 +14,7 @@ export default class Feed extends Component {
         this._createPost = this._createPost.bind(this);
         this._setPostsFetchingState = this._setPostsFetchingState.bind(this);
         this._likePost = this._likePost.bind(this);
+        this._removePost = this._removePost.bind(this);
     }
 
     state = {
@@ -34,13 +35,13 @@ export default class Feed extends Component {
         isPostFetching: false,
     };
 
-    _setPostsFetchingState(state) {
+    _setPostsFetchingState (state) {
         this.setState({
             isPostFetching: state,
         });
     }
 
-    async _likePost(id) {
+    async _likePost (id) {
         const { posts } = this.state;
         const { currentUserFirstName, currentUserLastName } = this.props;
         this._setPostsFetchingState(true);
@@ -70,7 +71,7 @@ export default class Feed extends Component {
         });
     }
 
-    async _createPost(comment) {
+    async _createPost (comment) {
         this._setPostsFetchingState(true);
 
         const post = {
@@ -90,12 +91,29 @@ export default class Feed extends Component {
         });
     }
 
-    render() {
+    async _removePost (id) {
+        this._setPostsFetchingState(true);
+        const { posts } = this.state;
+
+        await delay(1200);
+
+        const newPosts = posts.filter((post) => {
+            return post.id !== id;
+        });
+
+        this.setState({
+            posts:          newPosts,
+            isPostFetching: false,
+        });
+    }
+
+    render () {
         const {posts, isPostFetching} = this.state;
         const postsJSX = posts.map((post) => {
             return (
                 <Post
                     _likePost = { this._likePost }
+                    _removePost = { this._removePost }
                     key = { post.id }
                     { ...post }
                 />
