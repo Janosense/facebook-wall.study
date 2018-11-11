@@ -75,9 +75,9 @@ export default class Feed extends Component {
 
         const post = {
             id:      getUniqueID(),
-            created: moment.utc()
-                .valueOf(),
+            created: moment.utc().valueOf(),
             comment: comment,
+            likes:   [],
         };
 
         await delay(1200);
