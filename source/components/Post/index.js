@@ -2,16 +2,20 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Styles from './styles.m.css';
 import {Consumer} from './../HOC/withProfile';
-import PropTypes from 'prop-types';
+import { func, string, number, array } from 'prop-types';
+import Like from './../Like';
 
 export default class Post extends Component {
     static propTypes = {
-        comment: PropTypes.string.isRequired,
-        created: PropTypes.number.isRequired,
+        comment:   string.isRequired,
+        created:   number.isRequired,
+        _likePost: func.isRequired,
+        id:        string.isRequired,
+        likes:     array.isRequired,
     };
 
     render() {
-        const { comment, created } = this.props;
+        const { comment, created, _likePost, id, likes } = this.props;
 
         return (
             <Consumer>
@@ -21,6 +25,12 @@ export default class Post extends Component {
                         <a href = ''>{ `${context.currentUserFirstName} ${context.currentUserLastName}` }</a>
                         <time>{ moment(created).format('MMMM D h:mm:ss a') }</time>
                         <p>{ comment }</p>
+                        <Like
+                            _likePost = { _likePost }
+                            id = { id }
+                            likes = { likes }
+                            { ...context }
+                        />
                     </section>
                 )}
             </Consumer>
