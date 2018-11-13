@@ -41,10 +41,10 @@
     & .status {
         position: absolute;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         padding: 5px;
-        width: 70px;
+        width: 90px;
         min-width: max-content;
         height: 24px;
         background: #e9ebee;

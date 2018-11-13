@@ -24,7 +24,7 @@ export default class Post extends Component {
     _getCross = () => {
         const { firstName, lastName, currentUserFirstName, currentUserLastName } = this.props;
 
-        return `${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}` ? (
+        return `${ firstName } ${ lastName }` === `${ currentUserFirstName } ${ currentUserLastName }` ? (
             <span
                 className = { Styles.cross }
                 onClick = { this._removePost }

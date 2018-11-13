@@ -4,10 +4,10 @@ import Post from '../Post';
 import StatusBar from '../StatusBar';
 import Spinner from '../Spinner';
 import Styles from './styles.m.css';
-import { delay } from '../../instruments';
 import { withProfile } from './../HOC/withProfile';
 import Cather from '../Catcher';
-import { api, TOKEN } from '../../config/api';
+import { api, TOKEN, GROUP_ID } from '../../config/api';
+import { socket } from '../../socket/init';
 
 @withProfile
 export default class Feed extends Component {
@@ -17,12 +17,55 @@ export default class Feed extends Component {
     };
 
     componentDidMount () {
+        const { currentUserFirstName, currentUserLastName } = this.props;
         this._fetchPosts();
-        this.refetch = setInterval(this._fetchPosts, 10000);
+
+        socket.emit('join', GROUP_ID);
+        socket.on('create', (postJSON) => {
+            const { data: createdPost, meta } = JSON.parse(postJSON);
+
+            if (`${ currentUserFirstName } ${ currentUserLastName }` !== `${ meta.authorFirstName } ${ meta.authorLastName }`) {
+                this.setState(({ posts }) => {
+                    return {
+                        posts: [ createdPost, ...posts ],
+                    };
+                });
+            }
+        });
+
+        socket.on('remove', (postJSON) => {
+            const { data: removedPost, meta } = JSON.parse(postJSON);
+
+            if (`${ currentUserFirstName } ${ currentUserLastName }` !== `${ meta.authorFirstName } ${ meta.authorLastName }`) {
+                this.setState(({ posts }) => {
+                    return {
+                        posts: posts.filter((post) => {
+                            return post.id !== removedPost.id;
+                        }),
+                    };
+                });
+            }
+        });
+
+        socket.on('like', (postJSON) => {
+            const { data: likedPost } = JSON.parse(postJSON);
+
+            if (likedPost.likes.some((like) => `${ like.firstName } ${ like.lastName }` === `${ currentUserFirstName } ${ currentUserLastName }`)) {
+                this.setState(({ posts }) => {
+                    return {
+                        posts: posts.map((post) => {
+                            return post.id === likedPost.id ? likedPost : post;
+                        }),
+                    };
+                });
+            }
+        });
     }
 
     componentWillUnmount () {
-        clearInterval(this.refetch);
+        socket.removeListener('create');
+        socket.removeListener('remove');
+        socket.removeListener('like');
     }
 
     _setPostsFetchingState = (state) => {
