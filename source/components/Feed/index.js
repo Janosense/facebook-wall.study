@@ -8,6 +8,9 @@ import { withProfile } from './../HOC/withProfile';
 import Cather from '../Catcher';
 import { api, TOKEN, GROUP_ID } from '../../config/api';
 import { socket } from '../../socket/init';
+import { Transition } from 'react-transition-group';
+import { fromTo } from 'gsap';
+import Postman from '../Postman';
 
 @withProfile
 export default class Feed extends Component {
@@ -153,6 +156,10 @@ export default class Feed extends Component {
         });
     };
 
+    _animateComposerEnter = (composer) => {
+        fromTo(composer, 1, { opacity: 0, top: -10, }, { opacity: 1, top: 0, });
+    };
+
     render() {
         const {posts, isPostFetching} = this.state;
 
@@ -172,7 +179,14 @@ export default class Feed extends Component {
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isPostFetching }/>
                 <StatusBar/>
-                <Composer _createPost = { this._createPost }/>
+                <Transition
+                    appear
+                    in
+                    timeout = { 1000 }
+                    onEnter = { this._animateComposerEnter }>
+                    <Composer _createPost = { this._createPost }/>
+                </Transition>
+                <Postman />
                 {postsJSX}
             </section>
         );
