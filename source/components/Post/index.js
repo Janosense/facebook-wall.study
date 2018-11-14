@@ -47,7 +47,9 @@ export default class Post extends Component {
         const cross = this._getCross();
 
         return (
-            <section className = { Styles.post }>
+            <section
+                className = { Styles.post }
+                data-post-id = { id }>
                 { cross }
                 <img src = { avatar }/>
                 <a href = ''>{ `${ firstName } ${ lastName }` }</a>

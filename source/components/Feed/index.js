@@ -8,7 +8,7 @@ import { withProfile } from './../HOC/withProfile';
 import Cather from '../Catcher';
 import { api, TOKEN, GROUP_ID } from '../../config/api';
 import { socket } from '../../socket/init';
-import { Transition } from 'react-transition-group';
+import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import { fromTo } from 'gsap';
 import Postman from '../Postman';
 
@@ -157,7 +157,7 @@ export default class Feed extends Component {
     };
 
     _animateComposerEnter = (composer) => {
-        fromTo(composer, 1, { opacity: 0, top: -10, }, { opacity: 1, top: 0, });
+        fromTo(composer, 1, { opacity: 0, top: -10 }, { opacity: 1, top: 0 });
     };
 
     render() {
@@ -165,13 +165,26 @@ export default class Feed extends Component {
 
         const postsJSX = posts.map((post) => {
             return (
-                <Cather key = { post.id }>
-                    <Post
-                        _likePost = { this._likePost }
-                        _removePost = { this._removePost }
-                        { ...post }
-                    />
-                </Cather>
+                <CSSTransition
+                    classNames = {{
+                        enter:       Styles.postInStart,
+                        enterActive: Styles.postInEnd,
+                        exit:        Styles.postOutStart,
+                        exitActive:  Styles.postOutEnd,
+                    }}
+                    key = { post.id }
+                    timeout = {{
+                        enter: 500,
+                        exit:  400,
+                    }}>
+                    <Cather>
+                        <Post
+                            _likePost = { this._likePost }
+                            _removePost = { this._removePost }
+                            { ...post }
+                        />
+                    </Cather>
+                </CSSTransition>
             );
         });
 
@@ -187,7 +200,9 @@ export default class Feed extends Component {
                     <Composer _createPost = { this._createPost }/>
                 </Transition>
                 <Postman />
-                {postsJSX}
+                <TransitionGroup>
+                    {postsJSX}
+                </TransitionGroup>
             </section>
         );
     }
