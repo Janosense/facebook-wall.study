@@ -17,3 +17,12 @@ exports[`component Counter should correspond to its snapshot counterpart 1`] = `
   3
 </section>
 `;
+
+exports[`component Counter: component Counter should correspond to its snapshot counterpart 1`] = `
+<section
+  className="counter"
+>
+  Posts count: 
+  3
+</section>
+`;

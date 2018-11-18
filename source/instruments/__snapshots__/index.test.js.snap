@@ -3,3 +3,5 @@
 exports[`insruments sum function should return an additional of two arguments passed 1`] = `8`;
 
 exports[`instruments sum function should return an additional of two arguments passed 1`] = `8`;
+
+exports[`module instruments: sum function should return an additional of two arguments passed 1`] = `8`;

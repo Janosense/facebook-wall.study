@@ -1,7 +1,7 @@
 import { sum, delay, getUniqueID, getFullApiUrl } from './';
 
 
-describe('instruments', () => {
+describe('module instruments:', () => {
     test('sum function should be a function', () => {
         expect(sum).toBeInstanceOf(Function);
     });
