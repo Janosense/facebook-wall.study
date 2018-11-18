@@ -11,6 +11,7 @@ import { socket } from '../../socket/init';
 import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import { fromTo } from 'gsap';
 import Postman from '../Postman';
+import Counter from '../Counter';
 
 @withProfile
 export default class Feed extends Component {
@@ -199,6 +200,7 @@ export default class Feed extends Component {
                     onEnter = { this._animateComposerEnter }>
                     <Composer _createPost = { this._createPost }/>
                 </Transition>
+                <Counter count = { postsJSX.length } />
                 <Postman />
                 <TransitionGroup>
                     {postsJSX}
