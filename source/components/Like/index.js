@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { string, func, arrayOf, shape } from 'prop-types';
 import Styles from './styles.m.css';
 import cx from 'classnames';
 import { withProfile } from './../HOC/withProfile';
-import {socket} from "../../socket/init";
 
 @withProfile
 export default class Like extends Component {

@@ -1,17 +1,21 @@
+// Core
 import React, { Component } from 'react';
+
+// Components
+import { withProfile } from './../HOC/withProfile';
 import Composer from '../Composer';
 import Post from '../Post';
-import StatusBar from '../StatusBar';
 import Spinner from '../Spinner';
-import Styles from './styles.m.css';
-import { withProfile } from './../HOC/withProfile';
 import Cather from '../Catcher';
+import Postman from '../Postman';
+import Counter from '../Counter';
+
+//Instruments
+import Styles from './styles.m.css';
 import { api, TOKEN, GROUP_ID } from '../../config/api';
 import { socket } from '../../socket/init';
 import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
 import { fromTo } from 'gsap';
-import Postman from '../Postman';
-import Counter from '../Counter';
 
 @withProfile
 export default class Feed extends Component {
@@ -192,7 +196,6 @@ export default class Feed extends Component {
         return (
             <section className = { Styles.feed }>
                 <Spinner isSpinning = { isPostFetching }/>
-                <StatusBar/>
                 <Transition
                     appear
                     in

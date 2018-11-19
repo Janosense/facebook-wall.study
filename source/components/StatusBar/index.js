@@ -1,10 +1,16 @@
-import React, {Component} from 'react';
-import Styles from './styles.m.css';
-import { withProfile } from './../HOC/withProfile';
+// Core
+import React, { Component } from 'react';
 import cx from 'classnames';
-import { socket } from '../../socket/init';
 import { Transition } from 'react-transition-group';
 import { fromTo } from 'gsap';
+import { Link } from 'react-router-dom';
+
+// Components
+import { withProfile } from './../HOC/withProfile';
+
+// Instruments
+import { socket } from '../../socket/init';
+import Styles from './styles.m.css';
 
 @withProfile
 export default class StatusBar extends Component {
@@ -32,11 +38,11 @@ export default class StatusBar extends Component {
     }
 
     _animateStatusBarEnter = (statusBar) => {
-        fromTo(statusBar, 1, { opacity: 0, y: -10, }, { opacity: 1, y: 0, });
+        fromTo(statusBar, 1, { opacity: 0, y: -10 }, { opacity: 1, y: 0 });
     };
 
     render() {
-        const { avatar, currentUserFirstName, currentUserLastName } = this.props;
+        const { avatar, currentUserFirstName } = this.props;
         const { online } = this.state;
 
         const statusStyle = cx(Styles.status, {
@@ -56,12 +62,11 @@ export default class StatusBar extends Component {
                     <div className = { statusStyle }>
                         <div>{ statusMessage }</div>
                     </div>
-                    <button>
+                    <Link to = '/profile'>
                         <img src = { avatar }/>
                         <span>{ currentUserFirstName }</span>
-                        &nbsp;
-                        <span>{ currentUserLastName }</span>
-                    </button>
+                    </Link>
+                    <Link to = '/feed' >Feed</Link>
                 </section>
             </Transition>
         );
