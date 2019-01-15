@@ -5,7 +5,7 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 
 // Components
 import {Provider} from '../../components/HOC/withProfile';
-import Cather from '../../components/Catcher';
+import Catcher from '../../components/Catcher';
 import Profile from '../../components/Profile';
 import Feed from '../../components/Feed';
 import Login from '../../components/Login';
@@ -50,7 +50,7 @@ export default class App extends Component {
         const {isUserAuthenticated} = this.state;
 
         return (
-            <Cather>
+            <Catcher>
                 <Provider value = { options }>
                     <StatusBar
                         isUserAuthenticated = { isUserAuthenticated }
@@ -84,7 +84,7 @@ export default class App extends Component {
                     )
                     }
                 </Provider>
-            </Cather>
+            </Catcher>
         );
     }
 }

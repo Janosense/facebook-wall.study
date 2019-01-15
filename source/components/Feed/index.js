@@ -6,7 +6,7 @@ import { withProfile } from './../HOC/withProfile';
 import Composer from '../Composer';
 import Post from '../Post';
 import Spinner from '../Spinner';
-import Cather from '../Catcher';
+import Catcher from '../Catcher';
 import Postman from '../Postman';
 import Counter from '../Counter';
 
@@ -182,13 +182,13 @@ export default class Feed extends Component {
                         enter: 500,
                         exit:  400,
                     }}>
-                    <Cather>
+                    <Catcher>
                         <Post
                             _likePost = { this._likePost }
                             _removePost = { this._removePost }
                             { ...post }
                         />
-                    </Cather>
+                    </Catcher>
                 </CSSTransition>
             );
         });

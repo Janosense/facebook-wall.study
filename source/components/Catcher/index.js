@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object } from 'prop-types';
 import Styles from './styles.m.css';
 
-export default class Cather extends Component {
+export default class Catcher extends Component {
     static propTypes = {
         children: object.isRequired,
     };
